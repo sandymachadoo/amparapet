@@ -16,7 +16,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @PostMapping("/ cadastrar")
+    @PostMapping("/cadastrar")
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
         if (usuario.getRole() == null) {
             usuario.setRole("ROLE_USER"); // Define usuário comum por padrão

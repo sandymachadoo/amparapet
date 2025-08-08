@@ -18,6 +18,12 @@ public class UsuarioService {
     }
 
     public Usuario salvarUsuario(Usuario usuario) {
+        if (usuario.getRole() == null) {
+            usuario.setRole("ROLE_USER");
+        } else if (!usuario.getRole().startsWith("ROLE_")) {
+            usuario.setRole("ROLE_" + usuario.getRole().toUpperCase());
+        }
         return usuarioRepository.save(usuario);
     }
 }
+

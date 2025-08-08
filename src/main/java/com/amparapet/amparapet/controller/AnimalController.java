@@ -15,7 +15,7 @@ public class AnimalController {
     @Autowired
     private AnimalRepository animalRepository;
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<Animal> cadastrar(@RequestBody Animal animal) {
         return ResponseEntity.ok(animalRepository.save(animal));
     }
