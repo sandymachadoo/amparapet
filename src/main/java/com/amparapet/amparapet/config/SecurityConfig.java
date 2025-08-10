@@ -57,7 +57,7 @@ public class SecurityConfig {
                     .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + email));
             return org.springframework.security.core.userdetails.User.builder()
                     .username(usuario.getEmail())
-                    .password(usuario.getSenha())  // senha em texto puro
+                    .password(usuario.getSenha())
                     .roles(usuario.getRole().replace("ROLE_", ""))  // remove prefixo se tiver
                     .build();
         };

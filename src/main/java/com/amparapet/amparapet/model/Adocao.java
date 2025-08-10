@@ -1,7 +1,5 @@
 package com.amparapet.amparapet.model;
 
-import com.amparapet.amparapet.model.Animal;
-import com.amparapet.amparapet.model.Usuario;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,15 +10,17 @@ public class Adocao {
     private Long id;
 
     private String telefone;
+    private String tipoResidencia;
+    private String estado;
+    private String cidade;
 
-    public String getTipoResidencia() {
-        return tipoResidencia;
-    }
+    @ManyToOne
+    private Animal animal;
 
-    public void setTipoResidencia(String tipoResidencia) {
-        this.tipoResidencia = tipoResidencia;
-    }
+    @ManyToOne
+    private Usuario usuario;
 
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -35,6 +35,14 @@ public class Adocao {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getTipoResidencia() {
+        return tipoResidencia;
+    }
+
+    public void setTipoResidencia(String tipoResidencia) {
+        this.tipoResidencia = tipoResidencia;
     }
 
     public String getEstado() {
@@ -68,15 +76,4 @@ public class Adocao {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
-    private String tipoResidencia;
-    private String estado;
-    private String cidade;
-
-    @ManyToOne
-    private Animal animal;
-
-    @ManyToOne
-    private Usuario usuario;
 }
-
