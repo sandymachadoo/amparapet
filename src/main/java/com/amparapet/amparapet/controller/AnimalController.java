@@ -27,6 +27,8 @@ public class AnimalController {
                     animal.setNome(novo.getNome());
                     animal.setRaca(novo.getRaca());
                     animal.setDescricao(novo.getDescricao());
+                    animal.setImagemUrl(novo.getImagemUrl());
+                    animal.setIdade(novo.getIdade());
                     return ResponseEntity.ok(animalRepository.save(animal));
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -42,5 +44,4 @@ public class AnimalController {
     public List<Animal> listar() {
         return animalRepository.findAll();
     }
-
 }

@@ -2,6 +2,10 @@ package com.amparapet.amparapet.dto;
 
 public class AnimalDTO {
     private String nome;
+    private String idade;
+    private String raca;
+    private String descricao;
+    private String imagemUrl;
 
     public String getNome() {
         return nome;
@@ -9,6 +13,13 @@ public class AnimalDTO {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    public String getIdade() {
+        return idade;
+    }
+
+    public void setIdade(String idade) {
+        this.idade = idade;
     }
 
     public String getRaca() {
@@ -35,7 +46,4 @@ public class AnimalDTO {
         this.imagemUrl = imagemUrl;
     }
 
-    private String raca;
-    private String descricao;
-    private String imagemUrl;
 }

@@ -12,11 +12,12 @@ public class Animal {
     private Long id;
 
     private String nome;
+    private String idade;
     private String raca;
     private String descricao;
     private String imagemUrl;
 
-    // Getters e Setters
+
     public Long getId() {
         return id;
     }
@@ -31,6 +32,13 @@ public class Animal {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    public String getIdade() {
+        return idade;
+    }
+
+    public void setIdade(String idade) {
+        this.idade = idade;
     }
 
     public String getRaca() {
@@ -56,4 +64,6 @@ public class Animal {
     public void setImagemUrl(String imagemUrl) {
         this.imagemUrl = imagemUrl;
     }
+
 }
+
