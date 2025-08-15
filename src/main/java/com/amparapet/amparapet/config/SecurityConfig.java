@@ -35,14 +35,24 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/adocoes").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/adocoes").hasRole("ADMIN")       
+                        // Swagger e OpenAPI
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
+                        // Rotas públicas
                         .requestMatchers("/auth/login", "/usuarios/cadastrar").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/animais/**").permitAll()
+
+                        // Rotas de adoção
+                        .requestMatchers(HttpMethod.POST, "/adocoes").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/adocoes").hasRole("ADMIN")
+
+                        // Rotas de animais (admin)
                         .requestMatchers(HttpMethod.POST, "/animais/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/animais/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/animais/**").hasRole("ADMIN")
+
+                        // Qualquer outra rota precisa autenticação
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -65,7 +75,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();  // aceita senha texto puro
+        return NoOpPasswordEncoder.getInstance();  // aceita senha em texto puro
     }
 
     @Bean
