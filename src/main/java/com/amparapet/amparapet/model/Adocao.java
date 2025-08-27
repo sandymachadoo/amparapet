@@ -20,7 +20,6 @@ public class Adocao {
     @ManyToOne
     private Usuario usuario;
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

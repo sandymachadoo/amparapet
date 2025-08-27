@@ -3,6 +3,10 @@ package com.amparapet.amparapet.dto;
 public class AdocaoDTO {
     private String telefone;
     private String tipoResidencia;
+    private String estado;
+    private String cidade;
+    private Long animalId;
+    private UsuarioDTO usuario;
 
     public String getTelefone() {
         return telefone;
@@ -44,7 +48,11 @@ public class AdocaoDTO {
         this.animalId = animalId;
     }
 
-    private String estado;
-    private String cidade;
-    private Long animalId;
+    public UsuarioDTO getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioDTO usuario) {
+        this.usuario = usuario;
+    }
 }

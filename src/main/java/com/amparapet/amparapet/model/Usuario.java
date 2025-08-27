@@ -1,6 +1,7 @@
 package com.amparapet.amparapet.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Usuario {
@@ -9,48 +10,52 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String email;
-    private String senha;
+    public String getNome() {
+        return nome;
+    }
 
-    private String role; // Ex: "ROLE_ADMIN" ou "ROLE_USER"
-
-    public Usuario() {}
-
-    public Usuario(String email, String senha, String role) {
-        this.email = email;
-        this.senha = senha;
-        this.role = role;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getEmail() {
-        return email;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSenha() {
         return senha;
     }
 
-    public String getRole() {
-        return role;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public String getRole() {
+        return role;
     }
 
     public void setRole(String role) {
         this.role = role;
     }
+
+    private String nome;
+    private String email;
+
+    private String senha;
+
+    private String role;
+
+
 }

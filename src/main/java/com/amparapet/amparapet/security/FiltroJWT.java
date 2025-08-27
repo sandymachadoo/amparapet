@@ -34,7 +34,6 @@ public class FiltroJWT extends OncePerRequestFilter {
         System.out.println("FiltroJWT - Request URI: " + path);
         System.out.println("FiltroJWT - Context Path: " + contextPath);
 
-        // Aqui, use o path completo sem substring para evitar erros
         if (path.startsWith(contextPath + "/auth/login") || path.startsWith(contextPath + "/usuarios/cadastrar")) {
             filterChain.doFilter(request, response);
             return;
