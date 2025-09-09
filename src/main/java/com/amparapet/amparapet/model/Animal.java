@@ -13,6 +13,7 @@ public class Animal {
 
     private String nome;
     private String idade;
+    private String especie;
     private String raca;
     private String descricao;
     private String imagemUrl;
@@ -39,6 +40,13 @@ public class Animal {
 
     public void setIdade(String idade) {
         this.idade = idade;
+    }
+    public String getEspecie() {
+        return especie;
+    }
+
+    public void setEspecie(String especie) {
+        this.especie = especie;
     }
 
     public String getRaca() {

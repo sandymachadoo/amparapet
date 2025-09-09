@@ -22,17 +22,26 @@ public class AdocaoController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> registrarAdocao(@RequestBody AdocaoDTO dto) {
+    public ResponseEntity<AdocaoDTO> registrarAdocao(@RequestBody AdocaoDTO dto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
 
         Adocao adocao = adocaoService.salvarAdocao(dto, email);
-        return ResponseEntity.status(HttpStatus.CREATED).body(adocao);
+        AdocaoDTO adocaoDTO = adocaoService.toDTO(adocao);
+        return ResponseEntity.status(HttpStatus.CREATED).body(adocaoDTO);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Adocao>> listarTodasAdocoes() {
-        return ResponseEntity.ok(adocaoService.listarTodas());
+    public ResponseEntity<List<AdocaoDTO>> listarTodasAdocoes() {
+        List<AdocaoDTO> adocoes = adocaoService.listarTodasDTO();
+        return ResponseEntity.ok(adocoes);
+    }
+
+    @GetMapping("/animal/{animalId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<AdocaoDTO>> listarPorAnimal(@PathVariable Long animalId) {
+        List<AdocaoDTO> adocoes = adocaoService.listarPorAnimalIdDTO(animalId);
+        return ResponseEntity.ok(adocoes);
     }
 }
