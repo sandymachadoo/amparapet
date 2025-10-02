@@ -1,5 +1,6 @@
 package com.amparapet.amparapet.controller;
 
+import com.amparapet.amparapet.dto.LoginResponseDTO;
 import com.amparapet.amparapet.dto.UsuarioLoginDTO;
 import com.amparapet.amparapet.model.Usuario;
 import com.amparapet.amparapet.repository.UsuarioRepository;
@@ -48,10 +49,20 @@ public class AuthController {
             Usuario usuario = optionalUsuario.get();
             System.out.println("-> Usuário encontrado: " + usuario.getEmail() + ", role: " + usuario.getRole());
 
+            // AuthController.java
+
+// ... (método login) ...
+
+            // ... (código que gera o token)
+
             String token = jwtUtil.gerarToken(usuario.getEmail(), usuario.getRole());
             System.out.println("-> Token gerado com sucesso: " + token);
 
-            return ResponseEntity.ok(Map.of("token", token));
+            // 🚨 MUDANÇA AQUI: Retorna o DTO com token E role!
+            LoginResponseDTO responseDTO = new LoginResponseDTO(token, usuario.getRole());
+
+            return ResponseEntity.ok(responseDTO);
+
         } catch (AuthenticationException e) {
             System.out.println("-> Falha ao autenticar: " + e.getClass().getSimpleName() + " - " + e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");

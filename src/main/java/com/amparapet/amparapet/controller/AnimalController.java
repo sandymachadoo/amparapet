@@ -40,6 +40,14 @@ public class AnimalController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Animal> buscarPorId(@PathVariable Long id) {
+        return animalRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
     @GetMapping
     public List<Animal> listar() {
         return animalRepository.findAll();
