@@ -1,6 +1,8 @@
 package com.amparapet.amparapet.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Adocao {
@@ -15,6 +17,8 @@ public class Adocao {
     private String cidade;
 
     @ManyToOne
+    @JoinColumn(name = "animal_id")
+    @JsonIgnore
     private Animal animal;
 
     @ManyToOne
