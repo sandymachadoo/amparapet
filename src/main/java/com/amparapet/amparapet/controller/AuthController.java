@@ -49,16 +49,11 @@ public class AuthController {
             Usuario usuario = optionalUsuario.get();
             System.out.println("-> Usuário encontrado: " + usuario.getEmail() + ", role: " + usuario.getRole());
 
-            // AuthController.java
 
-// ... (método login) ...
-
-            // ... (código que gera o token)
 
             String token = jwtUtil.gerarToken(usuario.getEmail(), usuario.getRole());
             System.out.println("-> Token gerado com sucesso: " + token);
 
-            // 🚨 MUDANÇA AQUI: Retorna o DTO com token E role!
             LoginResponseDTO responseDTO = new LoginResponseDTO(token, usuario.getRole());
 
             return ResponseEntity.ok(responseDTO);

@@ -1,5 +1,6 @@
 package com.amparapet.amparapet.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -18,12 +19,11 @@ public class Animal {
     private String descricao;
     private String imagemUrl;
 
-    // 🐾 Novo: relacionamento com adoções
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
-    @com.fasterxml.jackson.annotation.JsonManagedReference
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Adocao> adocoes;
 
-    // Getters e setters
+
     public Long getId() {
         return id;
     }

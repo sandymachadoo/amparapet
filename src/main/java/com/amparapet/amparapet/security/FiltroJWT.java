@@ -32,7 +32,7 @@ public class FiltroJWT extends OncePerRequestFilter {
 
         System.out.println("🔎 FiltroJWT - Request URI: " + path);
 
-        // 🔓 Rotas públicas
+
         if (path.equals("/auth/login") || path.equals("/usuarios/cadastrar")) {
             System.out.println("➡️ Acesso liberado (rota pública): " + path);
             filterChain.doFilter(request, response);
