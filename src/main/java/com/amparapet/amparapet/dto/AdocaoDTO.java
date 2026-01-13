@@ -1,13 +1,17 @@
 package com.amparapet.amparapet.dto;
 
 public class AdocaoDTO {
+
+    private Long id;
     private String telefone;
     private String tipoResidencia;
     private String estado;
     private String cidade;
-    private AnimalDTO animal;   // Substitui animalId
+    private AnimalDTO animal;
     private UsuarioDTO usuario;
 
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getTelefone() { return telefone; }
     public void setTelefone(String telefone) { this.telefone = telefone; }
@@ -21,8 +25,8 @@ public class AdocaoDTO {
     public String getCidade() { return cidade; }
     public void setCidade(String cidade) { this.cidade = cidade; }
 
-    public AnimalDTO getAnimal() { return animal; }   // ✅ getter atualizado
-    public void setAnimal(AnimalDTO animal) { this.animal = animal; } // ✅ setter atualizado
+    public AnimalDTO getAnimal() { return animal; }
+    public void setAnimal(AnimalDTO animal) { this.animal = animal; }
 
     public UsuarioDTO getUsuario() { return usuario; }
     public void setUsuario(UsuarioDTO usuario) { this.usuario = usuario; }

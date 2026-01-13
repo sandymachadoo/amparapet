@@ -37,12 +37,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+
+
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(sess ->
+                        sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+
 
                 .authorizeHttpRequests(auth -> auth
+
+
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
 
                         .requestMatchers(
@@ -56,22 +66,25 @@ public class SecurityConfig {
 
 
                         .requestMatchers(HttpMethod.GET, "/animais", "/animais/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/animais").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/animais/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/animais/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/animais/**").hasRole("ADMIN")
 
 
-                        .requestMatchers(HttpMethod.POST, "/adocoes").hasAuthority("ROLE_USER")
-                        .requestMatchers(HttpMethod.GET, "/adocoes").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/adocoes").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/adocoes").hasRole("ADMIN")
 
-
-                        .requestMatchers(HttpMethod.POST, "/animais/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/animais/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/animais/**").hasAuthority("ROLE_ADMIN")
 
                         .anyRequest().authenticated()
                 )
 
+
                 .addFilterBefore(filtroJWT, UsernamePasswordAuthenticationFilter.class)
+
                 .build();
     }
+
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -84,21 +97,25 @@ public class SecurityConfig {
             return org.springframework.security.core.userdetails.User.builder()
                     .username(usuario.getEmail())
                     .password(usuario.getSenha())
-
-                    .authorities(usuario.getRole())
+                    .authorities(usuario.getRole()) // ROLE_ADMIN / ROLE_USER
                     .build();
         };
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 
+
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config
+    ) throws Exception {
         return config.getAuthenticationManager();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -110,7 +127,8 @@ public class SecurityConfig {
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }

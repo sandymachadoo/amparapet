@@ -82,6 +82,9 @@ public class AdocaoService {
         );
 
         AdocaoDTO dto = new AdocaoDTO();
+
+        dto.setId(adocao.getId());
+
         dto.setTelefone(adocao.getTelefone());
         dto.setTipoResidencia(adocao.getTipoResidencia());
         dto.setEstado(adocao.getEstado());

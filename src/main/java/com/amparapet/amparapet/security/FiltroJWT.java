@@ -5,8 +5,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -26,41 +26,59 @@ public class FiltroJWT extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+                                    FilterChain filterChain)
+            throws ServletException, IOException {
 
         String path = request.getRequestURI();
-
         System.out.println("🔎 FiltroJWT - Request URI: " + path);
 
-
         if (path.equals("/auth/login") || path.equals("/usuarios/cadastrar")) {
-            System.out.println("➡️ Acesso liberado (rota pública): " + path);
+            System.out.println("➡️ Acesso liberado (rota pública)");
             filterChain.doFilter(request, response);
             return;
         }
 
-        String token = request.getHeader("Authorization");
+        String authHeader = request.getHeader("Authorization");
 
-        if (token != null && token.startsWith("Bearer ")) {
-            String jwt = token.substring(7);
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+
+            String jwt = authHeader.substring(7);
             String email = jwtUtil.validarToken(jwt);
             String role = jwtUtil.obterRole(jwt);
 
-            System.out.println("✔️ Token detectado. Email: " + email + " | Role: " + role);
+            System.out.println("✔️ Token válido");
+            System.out.println("   Email: " + email);
+            System.out.println("   Role (raw): " + role);
 
             if (email != null && role != null) {
+
+
+                if (!role.startsWith("ROLE_")) {
+                    role = "ROLE_" + role;
+                }
+
                 List<SimpleGrantedAuthority> authorities =
                         List.of(new SimpleGrantedAuthority(role));
 
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(email, null, authorities);
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                email,
+                                null,
+                                authorities
+                        );
 
-                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                authentication.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request)
+                );
 
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                SecurityContextHolder.getContext()
+                        .setAuthentication(authentication);
+
+                System.out.println("✅ SecurityContext atualizado com authority: " + role);
             }
+
         } else {
-            System.out.println("❌ Token ausente, inválido ou mal formatado");
+            System.out.println("❌ Authorization header ausente ou inválido");
         }
 
         filterChain.doFilter(request, response);

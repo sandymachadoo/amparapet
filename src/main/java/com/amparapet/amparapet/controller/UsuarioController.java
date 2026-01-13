@@ -19,7 +19,7 @@ public class UsuarioController {
     @PostMapping("/cadastrar")
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
         if (usuario.getRole() == null) {
-            usuario.setRole("ROLE_USER"); // Define usuário comum por padrão
+            usuario.setRole("ROLE_USER");
         }
         Usuario usuarioSalvo = usuarioService.salvarUsuario(usuario);
         return ResponseEntity.status(201).body(usuarioSalvo);
