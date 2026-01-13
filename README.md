@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sandymachadoo/amparapet/main/telaampara.png" alt="Tela inicial Ampara Pet" />
+</p>
+
 # 🐾 Ampara Pet
 
 Ampara Pet é um site desenvolvido para uma ONG fictícia de proteção animal com o objetivo de facilitar a adoção de cães e gatos. O sistema conta com uma área pública e um painel administrativo com controle de acesso, permitindo gerenciar os animais disponíveis para adoção e usuários com diferentes permissões.
